@@ -24,9 +24,9 @@ try {
 }
 
 // Validate and sanitize inputs
-$name = filter_input(INPUT_POST, 'name', FILTER_SANITIZE_STRING);
-$contact = filter_input(INPUT_POST, 'contact', FILTER_SANITIZE_STRING);
-$drink = filter_input(INPUT_POST, 'drink', FILTER_SANITIZE_STRING);
+$name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
+$contact = filter_input(INPUT_GET, 'contact', FILTER_SANITIZE_STRING);
+$drink = filter_input(INPUT_GET, 'drink', FILTER_SANITIZE_STRING);
 
 // Basic validation
 if (!$name || !$contact || !$drink) {
