@@ -21,6 +21,7 @@
       padding: 20px;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
+      flex-direction: column;
     }
     .container {
       background: white;
@@ -193,6 +194,7 @@
       text-align: center;
       box-shadow: 0 4px 14px rgba(34,85,34,0.3);
       user-select: text;
+      white-space: pre-line;
     }
 
     /* Smooth transitions for confirmation box */
@@ -212,6 +214,20 @@
       border: 0 !important;
     }
 
+    /* Footer styles */
+    footer {
+      margin-top: 20px;
+      color: #444276;
+      font-size: 0.85rem;
+      text-align: center;
+      user-select: none;
+      opacity: 0.75;
+      max-width: 350px;
+      width: 100%;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+
     @media (max-width: 400px) {
       .container {
         max-width: 95vw;
@@ -220,6 +236,9 @@
       .drink-options {
         gap: 10px;
         flex-wrap: wrap;
+      }
+      footer {
+        max-width: 95vw;
       }
     }
   </style>
@@ -230,12 +249,12 @@
   <div class="heading-underline" aria-hidden="true"></div>
   <p class="subtitle">Please let us know you'll celebrate with us!</p>
   <p class="subtitle1">Tshepang's 21st Birthday is on August 30th, 2025. We're excited to celebrate with you!</p>
-  <form id="rsvpForm" novalidate>
+  <form id="rsvpForm" novalidate method="POST" action="rsvp_handler.php">
     <label for="name">Your Full Name *</label>
-    <input type="text" id="name" name="name" placeholder="e.g. Kgalalelo Monageng" required autocomplete="name" />
+    <input type="text" id="name" name="name" placeholder="e.g. Dj Ask" required autocomplete="name" />
 
-    <label for="contact">Contact (Email or Phone) *</label>
-    <input type="text" id="contact" name="contact" placeholder="Email or Phone Number" required autocomplete="contact" />
+    <label for="contact">Contact (Phone) *</label>
+    <input type="text" id="contact" name="contact" placeholder="Phone Number" required autocomplete="contact" />
 
     <fieldset class="drink-options" aria-describedby="drink-desc" style="border:none; padding:0; margin:0;">
       <legend id="drink-desc" style="font-weight:700; margin-bottom:8px; color:#3a1a66;">Preferred Drink *</legend>
@@ -249,70 +268,56 @@
   </form>
   <div id="confirmation" class="confirmation" role="alert" style="display:none;"></div>
 </div>
+
+<footer>
+  &copy; 2025 Tshepang's 21st Birthday Celebration. All rights reserved.
+  Created By DJ ASK
+</footer>
+
 <script>
+  // Client-side validation before form submission
   const form = document.getElementById('rsvpForm');
-  const confirmation = document.getElementById('confirmation');
 
   function validateContact(input) {
     const val = input.trim();
-    // Validate if email or phone number loosely
-    const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-    const phoneRegex = /^(?:\+27|0)(\d{9})$/; // South African phone number validation
-    return emailRegex.test(val) || phoneRegex.test(val);
-  }
-
-  function formatPhoneNumber(input) {
-    const val = input.trim();
-    if (val.startsWith('0') && val.length === 10) {
-      return '+27' + val.slice(1); // Convert 0XXXXXXXXX to +27XXXXXXXXX
-    }
-    return val; // Return as is if not in the expected format
+    // Validate South African phone number format
+    const phoneRegex = /^(?:\+27|0)(\d{9})$/;
+    return phoneRegex.test(val);
   }
 
   form.addEventListener('submit', (e) => {
-    e.preventDefault();
-
     const name = form.name.value.trim();
     const contact = form.contact.value.trim();
-    const drinkInput = form.elements['drink'];
-    let drink = null;
-
-    // Get selected drink value safely
-    if(drinkInput){
-      for(const input of drinkInput){
-        if(input.checked){
-          drink = input.value;
-          break;
-        }
+    const drinkInputs = form.elements['drink'];
+    let drinkSelected = false;
+    for(const input of drinkInputs){
+      if(input.checked){
+        drinkSelected = true;
+        break;
       }
     }
 
-    // Basic validations
     if (!name) {
       alert('Please enter your full name.');
       form.name.focus();
-      return;
+      e.preventDefault();
+      return false;
     }
+
     if (!contact || !validateContact(contact)) {
-      alert('Please enter a valid email or phone number.');
+      alert('Please enter a valid phone number.');
       form.contact.focus();
-      return;
+      e.preventDefault();
+      return false;
     }
-    if (!drink) {
+
+    if (!drinkSelected) {
       alert('Please select your preferred drink.');
-      return;
+      e.preventDefault();
+      return false;
     }
-
-    // Format the contact number if it's a phone number
-    const formattedContact = contact.includes('@') ? contact : formatPhoneNumber(contact);
-
-    // Show a confirmation message
-    confirmation.textContent = `Thank you, ${name}! We have received your RSVP. You prefer ${drink}. Your contact is ${formattedContact}. Looking forward to celebrating Tshepang's 21st! 🎉`;
-    confirmation.style.display = 'block';
-
-    // Reset form
-    form.reset();
   });
 </script>
 </body>
 </html>
+
