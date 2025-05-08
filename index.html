@@ -257,8 +257,16 @@
     const val = input.trim();
     // Validate if email or phone number loosely
     const emailRegex = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
-    const phoneRegex = /^\\+?\\d{7,15}$/; // rough phone number validation, digits + optional +
+    const phoneRegex = /^(?:\+27|0)(\d{9})$/; // South African phone number validation
     return emailRegex.test(val) || phoneRegex.test(val);
+  }
+
+  function formatPhoneNumber(input) {
+    const val = input.trim();
+    if (val.startsWith('0') && val.length === 10) {
+      return '+27' + val.slice(1); // Convert 0XXXXXXXXX to +27XXXXXXXXX
+    }
+    return val; // Return as is if not in the expected format
   }
 
   form.addEventListener('submit', (e) => {
@@ -268,6 +276,7 @@
     const contact = form.contact.value.trim();
     const drinkInput = form.elements['drink'];
     let drink = null;
+
     // Get selected drink value safely
     if(drinkInput){
       for(const input of drinkInput){
@@ -294,8 +303,11 @@
       return;
     }
 
+    // Format the contact number if it's a phone number
+    const formattedContact = contact.includes('@') ? contact : formatPhoneNumber(contact);
+
     // Show a confirmation message
-    confirmation.textContent = `Thank you, ${name}! We have received your RSVP. You prefer ${drink}. Looking forward to celebrating Tshepang's 21st! 🎉`;
+    confirmation.textContent = `Thank you, ${name}! We have received your RSVP. You prefer ${drink}. Your contact is ${formattedContact}. Looking forward to celebrating Tshepang's 21st! 🎉`;
     confirmation.style.display = 'block';
 
     // Reset form
