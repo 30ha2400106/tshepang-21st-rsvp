@@ -1,52 +1,54 @@
 <?php
 // Database connection credentials
 $host = 'localhost';  // your MySQL host
-$db   = 'tshepang'; // your database name
-$user = 'root'; // your MySQL username
+$db   = 'tshepang';   // your database name
+$user = 'root';       // your MySQL username
 $pass = 'Maikano@533'; // your MySQL password
 $charset = 'utf8mb4';
-
 // DSN string
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-
 $options = [
-  PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-  PDO::ATTR_EMULATE_PREPARES   => false,
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
 ];
-
+// Initialize variables for form values and error message
+$name = $contact = $drink = "";
+$message = "";
 try {
-  // Connect to database with PDO
-  $pdo = new PDO($dsn, $user, $pass, $options);
+    // Connect to database with PDO
+    $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-  echo "Database connection failed: " . htmlspecialchars($e->getMessage());
-  exit;
+    echo "Database connection failed: " . htmlspecialchars($e->getMessage());
+    exit;
 }
 
-// Validate and sanitize inputs
-$name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
-$contact = filter_input(INPUT_GET, 'contact', FILTER_SANITIZE_STRING);
-$drink = filter_input(INPUT_GET, 'drink', FILTER_SANITIZE_STRING);
+// Handle form submission
+if ($_SERVER["REQUEST_METHOD"] == "GET") {
+    // Validate and sanitize inputs
+    $name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
+    $contact = filter_input(INPUT_GET, 'contact', FILTER_SANITIZE_STRING);
+    $drink = filter_input(INPUT_GET, 'drink', FILTER_SANITIZE_STRING);
+    // Basic validation
+    if (!$name || !$contact || !$drink) {
+        $message = "Please fill all required fields.";
+    } else {
+        // Insert into database using prepared statement
+        $sql = "INSERT INTO rsvps (name, contact, drink) VALUES (:name, :contact, :drink)";
+        $stmt = $pdo->prepare($sql);
 
-// Basic validation
-if (!$name || !$contact || !$drink) {
-  echo "Please fill all required fields.";
-  exit;
+      try {
+        $stmt->execute(['name' => $name, 'contact' => $contact, 'drink' => $drink]);
+        $message = "Your order has been submitted successfully!";
+        // Clear form values after successful submission
+        $name = $contact = $drink = "";
+      } catch (PDOException $e) {
+        $message = "Error inserting RSVP: " . htmlspecialchars($e->getMessage());
+      }
+    }
 }
-
-// Insert into database using prepared statement
-$sql = "INSERT INTO rsvps (name, contact, drink) VALUES (:name, :contact, :drink)";
-$stmt = $pdo->prepare($sql);
-
-try {
-  $stmt->execute(['name' => $name, 'contact' => $contact, 'drink' => $drink]);
-} catch (PDOException $e) {
-  echo "Error inserting RSVP: " . htmlspecialchars($e->getMessage());
-  exit;
-}
-
-// Success confirmation
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +93,7 @@ try {
 <body>
 <div class="confirmation">
   Thank you, <?=htmlspecialchars($name)?>! Your RSVP has been recorded.<br />
-  We look forward to celebrating Tshepang's 21st Birthday with you! 🎉<br />
+  We look forward to celebrating Tshepang's 20 FEST Birthday with you! 🎉<br />
   <a href="index.html">Submit another response</a>
 </div>
 </body>
