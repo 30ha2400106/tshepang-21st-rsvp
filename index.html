@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <title>Tshepang's 21st Birthday RSVP</title>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #6b8dd6, #b087d6);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      flex-direction: column;
+    }
+    .container {
+      background: white;
+      padding: 30px 35px;
+      border-radius: 18px;
+      box-shadow: 0 24px 48px rgba(0,0,0,0.2);
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      position: relative;
+    }
+    h1 {
+      font-size: 1.5rem;
+      margin-bottom: 6px;
+      color: #3a1a66;
+      letter-spacing: 1px;
+      font-weight: 700;
+      text-shadow: 0 1px 4px rgba(107,141,214,0.7);
+    }
+    .subtitle {
+      font-size: 0.94rem;
+      color: #5c3c95;
+      margin-bottom: 28px;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(107,141,214,0.4);
+    }
+    .subtitle1 {
+      font-size: 0.94rem;
+      color: #5c3c95;
+      margin-bottom: 28px;
+      font-weight: 600;
+      text-shadow: 0 1px 2px rgba(107,141,214,0.4);
+    }
+    /* Decorative underline under heading */
+    .heading-underline {
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, #6b8dd6, #b087d6);
+      margin: 6px auto 28px auto;
+      border-radius: 2px;
+    }
+
+    form {
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #3a1a66;
+      text-shadow: 0 1px 1px rgba(180,180,180,0.4);
+      transition: color 0.3s ease;
+      user-select: none;
+    }
+    label:hover {
+      color: #6b8dd6;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 11px 14px;
+      border: 3px solid #b3a8e8;
+      border-radius: 12px;
+      font-size: 1rem;
+      margin-bottom: 22px;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: inset 0 2px 6px rgba(179,168,232,0.15);
+    }
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+      border-color: #6b8dd6;
+      box-shadow: 0 0 10px rgba(107,141,214,0.5);
+      outline: none;
+      background: #fefeff;
+    }
+
+    button {
+      margin-top: 35px; /* Added margin-top to create space from preferred drink */
+      width: 100%;
+      background-color: #6b8dd6;
+      color: white;
+      font-size: 1.05rem;
+      padding: 14px;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 6px 12px rgba(107,141,214,0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+      user-select: none;
+    }
+    button:hover,
+    button:focus {
+      background-color: #4c67c0;
+      box-shadow: 0 8px 18px rgba(76,103,192,0.9);
+      outline: none;
+    }
+    button:active {
+      background-color: #395299;
+      box-shadow: 0 4px 10px rgba(57,82,153,0.9);
+    }
+    .confirmation {
+      margin-top: 24px;
+      padding: 18px 22px;
+      background: #d3e9d7;
+      color: #225522;
+      border-radius: 15px;
+      font-weight: 700;
+      text-align: center;
+      box-shadow: 0 4px 14px rgba(34,85,34,0.3);
+      user-select: text;
+      white-space: pre-line;
+    }
+
+    /* Smooth transitions for confirmation box */
+    .confirmation[hidden] {
+      display: none !important;
+    }
+
+    /* Accessibility helper for screen readers */
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
+    /* Footer styles */
+    footer {
+      margin-top: 20px;
+      color: #444276;
+      font-size: 0.85rem;
+      text-align: center;
+      user-select: none;
+      opacity: 0.75;
+      max-width: 350px;
+      width: 100%;
+      font-weight: 600;
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        max-width: 95vw;
+        padding: 25px 20px;
+      }
+      footer {
+        max-width: 95vw;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container" role="main" aria-labelledby="page-title">
+  <h1 id="page-title">Tshepang's 20 FEST Birthday RSVP</h1>
+  <div class="heading-underline" aria-hidden="true"></div>
+  <p class="subtitle">Please let us know you'll celebrate with us!</p>
+  <p class="subtitle1">Tshepang's 20 FEST Birthday is on August 30th, 2025. We're excited to celebrate with you!</p>
+  <form
+    action="https://formspree.io/f/xgvkblzg"
+    method="POST"
+  >
+
+  <label for="name">Your Full Name *</label>
+    <input type="text" id="name" name="name" placeholder="e.g. Dj Ask" required autocomplete="name" />
+
+    <label for="contact">Contact (Phone) *</label>
+    <input type="text" id="contact" name="contact" placeholder="Phone Number" required autocomplete="contact" />
+    <button type="submit" aria-describedby="submit-desc">RSVP Now</button>
+    <p id="submit-desc" class="sr-only">Click to submit your RSVP details</p>
+  </form>
+  <div id="confirmation" class="confirmation" role="alert" style="display:none;"></div>
+</div>
+
+<footer>
+  &copy; 2025 Tshepang's 20 FEST Birthday Celebration. All rights reserved.
+  Created By DJ ASK
+</footer>
+
+<script>
+  // Client-side validation before form submission
+  const form = document.getElementById('rsvpForm');
+
+  function validateContact(input) {
+    const val = input.trim();
+    // Validate South African phone number format
+    const phoneRegex = /^(?:\+27|0)(\d{9})$/;
+    return phoneRegex.test(val);
+  }
+
+  form.addEventListener('submit', (e) => {
+    const name = form.name.value.trim();
+    const contact = form.contact.value.trim();
+    const drinkInputs = form.elements['drink'];
+    let drinkSelected = false;
+    for(const input of drinkInputs){
+      if(input.checked){
+        drinkSelected = true;
+        break;
+      }
+    }
+
+    if (!name) {
+      alert('Please enter your full name.');
+      form.name.focus();
+      e.preventDefault();
+      return false;
+    }
+
+    if (!contact || !validateContact(contact)) {
+      alert('Please enter a valid phone number.');
+      form.contact.focus();
+      e.preventDefault();
+      return false;
+    }
+
+    if (!drinkSelected) {
+      alert('Please select your preferred drink.');
+      e.preventDefault();
+      return false;
+    }
+  });
+</script>
+</body>
+</html>
+
