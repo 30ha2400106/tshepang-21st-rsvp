@@ -101,64 +101,7 @@
       outline: none;
       background: #fefeff;
     }
-    /* Custom styled radio buttons for drinks */
-    .drink-options {
-      margin-bottom: 25px;
-      display: flex;
-      justify-content: start;
-      gap: 18px;
-    }
-    .drink-options label {
-      font-weight: 600;
-      margin-bottom: 0;
-      cursor: pointer;
-      position: relative;
-      padding-left: 30px;
-      color: #534488;
-      user-select: none;
-      transition: color 0.3s ease;
-    }
-    .drink-options label:hover {
-      color: #4a3f94;
-    }
-    /* Hide native radio */
-    .drink-options input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      cursor: pointer;
-      height: 0;
-      width: 0;
-    }
-    /* Custom radio style */
-    .custom-radio {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      transform: translateY(-50%);
-      height: 20px;
-      width: 20px;
-      background: white;
-      border: 3px solid #b3a8e8;
-      border-radius: 50%;
-      box-shadow: inset 0 2px 6px rgba(179,168,232,0.15);
-      transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    }
-    /* Show fill circle when checked */
-    .drink-options input[type="radio"]:checked + .custom-radio {
-      border-color: #6b8dd6;
-      box-shadow: 0 0 8px rgba(107,141,214,0.7);
-    }
-    .drink-options input[type="radio"]:checked + .custom-radio::after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 10px;
-      height: 10px;
-      background: #6b8dd6;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-    }
+
     button {
       margin-top: 35px; /* Added margin-top to create space from preferred drink */
       width: 100%;
@@ -233,10 +176,6 @@
         max-width: 95vw;
         padding: 25px 20px;
       }
-      .drink-options {
-        gap: 10px;
-        flex-wrap: wrap;
-      }
       footer {
         max-width: 95vw;
       }
@@ -249,20 +188,13 @@
   <div class="heading-underline" aria-hidden="true"></div>
   <p class="subtitle">Please let us know you'll celebrate with us!</p>
   <p class="subtitle1">Tshepang's 20 FEST Birthday is on August 30th, 2025. We're excited to celebrate with you!</p>
-  <form id="rsvpForm" novalidate method="GET" action="rsvp_handler.php">
-    <label for="name">Your Full Name *</label>
+  <form id="rsvpForm" novalidate method="POST" action="rsvp_handler.php">
+
+  <label for="name">Your Full Name *</label>
     <input type="text" id="name" name="name" placeholder="e.g. Dj Ask" required autocomplete="name" />
 
     <label for="contact">Contact (Phone) *</label>
     <input type="text" id="contact" name="contact" placeholder="Phone Number" required autocomplete="contact" />
-
-    <fieldset class="drink-options" aria-describedby="drink-desc" style="border:none; padding:0; margin:0;">
-      <legend id="drink-desc" style="font-weight:700; margin-bottom:8px; color:#3a1a66;">Preferred Drink *</legend>
-      <label><input type="radio" name="drink" value="Cider" required /><span class="custom-radio"></span> Cider</label>
-      <label><input type="radio" name="drink" value="Beer" /><span class="custom-radio"></span> Beer</label>
-      <label><input type="radio" name="drink" value="Cognac" /><span class="custom-radio"></span> Cognac</label>
-    </fieldset>
-
     <button type="submit" aria-describedby="submit-desc">RSVP Now</button>
     <p id="submit-desc" class="sr-only">Click to submit your RSVP details</p>
   </form>
